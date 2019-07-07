@@ -1,0 +1,241 @@
+// mixin
+
+@mixin border($border: 1px solid red) {
+    border: $border;
+}
+@mixin border-radius($bd-radius: 50%){
+    border-radius: $bd-radius;
+}
+@mixin position($position: absolute) {
+    position: $position;
+}
+@mixin full-width($full-width: 100%) {
+    width: $full-width;
+}
+@mixin width($width) {
+    width: $width;
+}
+@mixin full-height($full-height: 100%) {
+    height: $full-height;
+}
+@mixin height($height) {
+    height: $height;
+}
+@mixin full-view-height($view-height: 100vh){
+    height: $view-height;
+}
+@mixin top($top: 0){
+    top: $top;
+}
+@mixin bottom($bottom: 0){
+    bottom: $bottom;
+}
+@mixin left($left: 0){
+    left: $left;
+}
+@mixin transition($transition: 0.5s) {
+    transition: $transition;
+}
+@mixin transform-full-scale {
+    transform: scale(1);
+}
+@mixin transform-no-scale {
+    transform: scale(0);
+}
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.section {
+    // @include border; // to be deleted
+    @include full-width;
+    @include full-view-height;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.intro {
+    background: url(image/bg.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+    &__box {
+        @include width(450px);
+        text-align: center;
+        color: #fff;
+    }
+    &__img {
+        @include border-radius;
+        @include width(300px);
+        @include height(350px)
+    }
+    .scroll-down {
+        @include position;
+        @include bottom(50px);
+        @include left(50%);
+        @include width(20px);
+        @include height(20px);
+        transform: translateY(-30px) rotate(45deg);
+        span {
+            @include position;
+            @include full-width;
+            @include full-height;
+            @include top;
+            @include left;
+            display: block;
+            border-bottom: 2px solid #fff;
+            border-right: 2px solid #fff;
+            animation: scroll-down-animate 1.5s linear infinite;
+            @for $i from 3 through 1{
+                @keyframes scroll-down-animate {
+                    0% {
+                        @include top;
+                        @include left;
+                        opacity: 0;
+                    }
+                    25% {
+                        @include top(5px);
+                        @include left(5px);
+                        opacity: 1;
+                    }
+                    70%, 100% {
+                        @include top(10px);
+                        @include left(10px);
+                        opacity: 0;
+                    }
+                }
+                &:nth-child(#{$i}){
+                    transform: translate($i*10px, $i*10px);
+                    animation-delay: $i*0.2s;
+                }
+            }
+        }
+    }
+}
+
+.about {
+    @include full-height;
+    background-color: #666;
+    & > * {
+        padding: 0 20px;
+    }
+    &__left {
+        @include width(30%);
+        color: #fff;
+        line-height: 2em;
+        img {
+            @include border-radius;
+            @include full-width;
+            @include height(40%);
+            
+        }
+        li {
+            list-style: none;
+        }
+    }
+    &__right {
+        @include width(70%);
+        background-color: #fff;
+        color: #000;
+        padding-bottom: 20px;
+        h2 {
+            @include full-width;
+            text-align: center;
+            background-color: #ccc;
+        }
+        p {
+            font-weight: bold;
+        }
+    }
+}
+
+.project {
+    // flex-direction: column;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    background-color: rgb(170, 170, 170);
+    & > h2, p {
+        @include full-width();
+        text-align: center;
+        font-size: 2em;
+    }
+    & > a {
+        // @include border();
+        @include width(20%);
+        text-align: center;
+        padding: 1em;
+        font-size: 2em;
+    }
+    &__container {
+        @include full-width();
+        @include height(50%);
+        margin: 0 10%;
+        display: flex;
+        .project__box {
+            // @include border();
+            @include width(25%);
+            @include transition();
+            position: relative;
+            & > * {
+                @include border;
+                @include full-width;
+                @include height(50%);
+                @include position;
+            }
+            .thumb {
+                @include top(25%);
+                @include transition();
+            }
+            .details {
+                @include top(50%);
+                @include transform-no-scale();
+                @include transition();
+                background-color: rgb(178, 248, 193);
+                .content {
+                    @include position;
+                    @include full-width;
+                    box-sizing: border-box;
+                    text-align: center;
+                    a {
+                        border: 2px solid #fff;
+                        color: #fff;
+                        display: inline-block;
+                        border-radius: 20px;
+                        padding: 5px 20px;
+                        text-decoration: none;
+                        &:hover {
+                            background-color: #ccc;
+                            color: #262626;
+                        }
+                    }
+                }
+            }
+            &:hover {
+                transform: scale(1.1);
+                z-index: 1;
+                .thumb {
+                    @include top();
+                }
+                .details {
+                    @include transform-full-scale();
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .project {
+        &__container {
+            @include height(60%);
+            flex-wrap: wrap;
+            .project__box {
+                @include width(50%);
+                }
+            }
+        }
+    }
