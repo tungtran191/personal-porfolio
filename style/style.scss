@@ -184,11 +184,14 @@ body {
                 @include border;
                 @include full-width;
                 @include height(50%);
-                @include position;
             }
             .thumb {
                 @include top(25%);
                 @include transition();
+                & img {
+                    @include full-width();
+                    @include full-height();
+                }
             }
             .details {
                 @include top(50%);
@@ -200,12 +203,16 @@ body {
                     @include full-width;
                     box-sizing: border-box;
                     text-align: center;
+                    line-height: 0.5em;
+                    p {
+                        font-size: 16px;
+                    }
                     a {
                         border: 2px solid #fff;
                         color: #fff;
                         display: inline-block;
                         border-radius: 20px;
-                        padding: 5px 20px;
+                        padding: 10px 20px;
                         text-decoration: none;
                         &:hover {
                             background-color: #ccc;
