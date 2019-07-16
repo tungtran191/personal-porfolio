@@ -181,7 +181,6 @@ body {
             @include transition();
             position: relative;
             & > * {
-                @include border;
                 @include full-width;
                 @include height(50%);
             }
